@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curb - Wholesale Prices, Retail Access</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            curb: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617',
+            },
+            accent: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+              800: '#9a3412',
+              900: '#7c2d12',
+            },
+            success: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+              800: '#166534',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+  </style>
+</head>
+<body class="min-h-screen bg-white">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="text-2xl font-bold text-curb-900">curb</a>
+        <div class="flex items-center gap-4">
+          <a href="#" class="text-sm text-curb-600 hover:text-curb-900">Browse Auctions</a>
+          <a href="#" class="text-sm font-medium text-curb-900 hover:text-accent-600">Sign In</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-curb-900 tracking-tight">
+        Wholesale prices.
+        <br>
+        <span class="text-accent-600">Retail access.</span>
+      </h1>
+      <p class="mt-6 text-xl text-curb-600 max-w-2xl mx-auto leading-relaxed">
+        Curb connects you directly to cars that dealers don't want to recondition—and 
+        private sellers ready to move. Full transparency, no markup, no games.
+      </p>
+      
+      <!-- Waitlist Form -->
+      <div class="mt-10 max-w-md mx-auto" id="waitlist-container">
+        <p class="text-sm font-medium text-curb-700 mb-3">
+          We're launching soon. Join the waitlist.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <input
+            type="email"
+            id="email-input"
+            placeholder="Enter your email"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent focus:outline-none"
+          >
+        </div>
+        <div class="flex gap-3 mt-3">
+          <button
+            onclick="joinWaitlist('buyer')"
+            class="flex-1 px-6 py-3 bg-curb-900 text-white font-semibold rounded-lg hover:bg-curb-800 transition-colors"
+          >
+            I want to buy
+          </button>
+          <button
+            onclick="joinWaitlist('seller')"
+            class="flex-1 px-6 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-colors"
+          >
+            I want to sell
+          </button>
+        </div>
+      </div>
+      
+      <!-- Success Message (hidden by default) -->
+      <div class="mt-10 max-w-md mx-auto hidden" id="success-message">
+        <div class="bg-success-50 border border-success-200 rounded-xl p-6 text-center">
+          <svg class="w-12 h-12 text-success-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <p class="text-lg font-semibold text-success-800">You're on the list!</p>
+          <p class="text-success-600 mt-1">We'll notify you when Curb launches.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Buyers -->
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-sm font-medium mb-4">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+            For Buyers
+          </div>
+          <h2 class="text-3xl sm:text-4xl font-bold text-curb-900 mb-6">
+            Skip the markup. See what's real.
+          </h2>
+          <p class="text-lg text-curb-600 mb-8 leading-relaxed">
+            Dealers take in cars they don't want to recondition. Usually, they ship them 
+            to a wholesale auction, another dealer buys them, marks them up, and sells 
+            them to you. <strong class="text-curb-900">Curb cuts out the middleman.</strong> You 
+            see what's wrong, you decide if it's worth it, and you pay less.
+          </p>
+          
+          <div class="space-y-4">
+            <!-- Benefit 1 -->
+            <div class="flex gap-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center text-accent-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-curb-900">Near-wholesale pricing</h4>
+                <p class="text-curb-600 text-sm">Access the same inventory dealers bid on—without the retail markup</p>
+              </div>
+            </div>
+            
+            <!-- Benefit 2 -->
+            <div class="flex gap-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center text-accent-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-curb-900">Full inspection reports</h4>
+                <p class="text-curb-600 text-sm">Dealer listings show exactly what needs work—no surprises</p>
+              </div>
+            </div>
+            
+            <!-- Benefit 3 -->
+            <div class="flex gap-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center text-accent-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-curb-900">No hidden reserves</h4>
+                <p class="text-curb-600 text-sm">Every auction ends in a sale. The highest bid wins, period.</p>
+              </div>
+            </div>
+            
+            <!-- Benefit 4 -->
+            <div class="flex gap-4">
+              <div class="flex-shrink-0 w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center text-accent-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <div>
+                <h4 class="font-semibold text-curb-900">No dealer games</h4>
+                <p class="text-curb-600 text-sm">No market adjustments, no mandatory add-ons, no bait and switch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Mock Listing Card -->
+        <div class="relative">
+          <div class="bg-white rounded-2xl shadow-xl p-6 border border-gray-100">
+            <div class="aspect-video bg-gray-100 rounded-lg mb-4 flex items-center justify-center">
+              <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M8 17h8M8 17v-4m8 4v-4m-8 0h8M8 13V9a4 4 0 118 0v4M5 17h14a2 2 0 002-2v-2a2 2 0 00-2-2H5a2 2 0 00-2 2v2a2 2 0 002 2z"></path>
+              </svg>
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-lg font-bold text-curb-900">2019 BMW 330i</span>
+              <span class="px-2 py-1 bg-success-100 text-success-700 text-xs font-medium rounded">Dealer Listing</span>
+            </div>
+            <p class="text-sm text-curb-500 mb-4">68,000 miles • Clean title • Los Angeles, CA</p>
+            
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+              <p class="text-sm font-medium text-amber-800 mb-1">Inspection Notes:</p>
+              <p class="text-sm text-amber-700">Needs front brake pads (~$280), minor curb rash on 2 wheels, AC blows cold</p>
+            </div>
+            
+            <div class="flex items-end justify-between">
+              <div>
+                <p class="text-xs text-curb-500">Current Bid</p>
+                <p class="text-2xl font-bold text-curb-900">$18,500</p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-curb-500">Retail value</p>
+                <p class="text-lg text-curb-400 line-through">$24,900</p>
+              </div>
+            </div>
+          </div>
+          <div class="absolute -z-10 -top-4 -right-4 w-72 h-72 bg-accent-100 rounded-full blur-3xl opacity-50"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Sellers -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-curb-100 text-curb-700 rounded-full text-sm font-medium mb-4">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          For Sellers
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-curb-900">
+          Sell smarter, not harder.
+        </h2>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- Dealers -->
+        <div class="bg-gray-50 rounded-2xl p-8">
+          <div class="w-12 h-12 bg-curb-900 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-curb-900 mb-2">Dealers</h3>
+          <p class="text-curb-600 mb-6">Get more than wholesale auction, less hassle than retail.</p>
+          
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700"><strong>$100 flat fee</strong> to list—that's it</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">Just safety it, upload your inspection report, set a minimum bid</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">No reconditioning, no detailing, no sales staff time</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">Typically 10-15% more than wholesale auction</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- Private Sellers -->
+        <div class="bg-accent-50 rounded-2xl p-8">
+          <div class="w-12 h-12 bg-accent-600 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-curb-900 mb-2">Private Sellers</h3>
+          <p class="text-curb-600 mb-6">Reach serious buyers without the typical hassle.</p>
+          
+          <ul class="space-y-3">
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700"><strong>Free to list</strong>—5% fee only when your car sells</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">Reach serious buyers, not tire-kickers</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">No lowball offers, no "is this still available?"</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-success-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="text-curb-700">3-day auctions mean fast, decisive sales</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="py-20 bg-curb-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">How it works</h2>
+        <p class="text-curb-300 text-lg">Simple, transparent, no nonsense.</p>
+      </div>
+      
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Step 1 -->
+        <div class="text-center">
+          <div class="relative inline-flex mb-4">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-white text-sm font-bold">1</div>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-2">List the car</h4>
+          <p class="text-curb-300 text-sm">Upload photos, VIN, and condition details. Dealers include inspection reports.</p>
+        </div>
+        
+        <!-- Step 2 -->
+        <div class="text-center">
+          <div class="relative inline-flex mb-4">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-white text-sm font-bold">2</div>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-2">Set the price</h4>
+          <p class="text-curb-300 text-sm">Choose your minimum opening bid. No hidden reserves—what you see is what you get.</p>
+        </div>
+        
+        <!-- Step 3 -->
+        <div class="text-center">
+          <div class="relative inline-flex mb-4">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+              </svg>
+            </div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-white text-sm font-bold">3</div>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-2">3-day auction</h4>
+          <p class="text-curb-300 text-sm">Buyers bid. Highest bid when the clock runs out wins. Simple as that.</p>
+        </div>
+        
+        <!-- Step 4 -->
+        <div class="text-center">
+          <div class="relative inline-flex mb-4">
+            <div class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+              </svg>
+            </div>
+            <div class="absolute -top-2 -right-2 w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-white text-sm font-bold">4</div>
+          </div>
+          <h4 class="text-lg font-semibold text-white mb-2">Close the deal</h4>
+          <p class="text-curb-300 text-sm">Buyer and seller connect directly to complete payment and pickup.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-curb-900 mb-4">
+        Ready to try a better way?
+      </h2>
+      <p class="text-lg text-curb-600 mb-8">
+        Join the waitlist and be first to know when Curb launches in your area.
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto" id="bottom-waitlist">
+        <input
+          type="email"
+          id="bottom-email-input"
+          placeholder="Enter your email"
+          class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-transparent focus:outline-none"
+        >
+        <button
+          onclick="joinWaitlistBottom()"
+          class="px-6 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-colors flex items-center justify-center gap-2"
+        >
+          Join Waitlist
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="hidden" id="bottom-success">
+        <div class="inline-flex items-center gap-2 px-6 py-3 bg-success-100 text-success-700 rounded-full font-medium">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          You're on the waitlist!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-gray-50 border-t border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="text-2xl font-bold text-curb-900">curb</div>
+        <p class="text-sm text-curb-400">© 2026 Curb. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function joinWaitlist(type) {
+      const email = document.getElementById('email-input').value;
+      if (email) {
+        // In production, you'd POST this to your backend
+        console.log('Waitlist signup:', { email, type });
+        document.getElementById('waitlist-container').classList.add('hidden');
+        document.getElementById('success-message').classList.remove('hidden');
+      }
+    }
+    
+    function joinWaitlistBottom() {
+      const email = document.getElementById('bottom-email-input').value;
+      if (email) {
+        console.log('Waitlist signup:', { email });
+        document.getElementById('bottom-waitlist').classList.add('hidden');
+        document.getElementById('bottom-success').classList.remove('hidden');
+      }
+    }
+  </script>
+
+</body>
+</html>
